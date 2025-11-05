@@ -1,0 +1,89 @@
+entrypoint vs cmd:
+
+Entrypoint is a runtime statement - only runs on container start and not on image build - stored as a metadata with an image
+Only the last entrypoint is taken into the consideration - overrides all other entrypoint. A container needs atleast one CMD or ENTRYPOINT to know where the container should start
+
+docker pull busybox
+docker image inspect busybox
+
+[
+    {
+        "Id": "sha256:eade5be814e817df411f138aa7711c3f81595185eb54b3257fd19f6c4966b285",
+        "RepoTags": [
+            "busybox:latest"
+        ],
+        "RepoDigests": [
+            "busybox@sha256:e3652a00a2fabd16ce889f0aa32c38eec347b997e73bd09e69c962ec7f8732ee"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2024-09-26T21:31:42Z",
+        "DockerVersion": "",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "sh"
+            ],
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": null
+        },
+        "Architecture": "arm64",
+        "Variant": "v8",
+        "Os": "linux",
+        "Size": 4170790,
+        "GraphDriver": {
+            "Data": {
+                "MergedDir": "/var/lib/docker/overlay2/44685a2efdd416c35efc6c6355be9cf4af6924200771bf9c24a8160fb4b69520/merged",
+                "UpperDir": "/var/lib/docker/overlay2/44685a2efdd416c35efc6c6355be9cf4af6924200771bf9c24a8160fb4b69520/diff",
+                "WorkDir": "/var/lib/docker/overlay2/44685a2efdd416c35efc6c6355be9cf4af6924200771bf9c24a8160fb4b69520/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:1a382740c5642e4607412a341df3716c22287ffa6adf92eaff54e079a1902f05"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
+
+
+docker run -it busybox (creates a new container and runs the cmd)
+docker exec -it <container_id> (runs an interactive terminal already existing container)
+
+Use entrypoint when the container has a single main purpose that shouldn't change
+Use cmd when you want the defaults to be changed by the user 
+
+docker container run image <override_cmd> - this will override the cmd inside the image Config
+docker container run --entrypoint <cmd> image
+
+
+Shell form vs exec form:
+
+RUN - always use shell form
+ENTRY - always use exec form else CMD won't work
+CMD - exec or shell form depending upon whether shell features are needed
+ENTRY+CMD - always use exec to avoid weird edge cases
+
+
+

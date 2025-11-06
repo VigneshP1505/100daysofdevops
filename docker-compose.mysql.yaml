@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: custom_mysql_compose
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-admin@123}"
+      MYSQL_USER: "${MYSQL_USER:-vignesh}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-vig.dev123!}"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_vol:/var/lib/mysql
+
+volumes:
+  mysql_vol:
+    name: custom_mysql_compose_vol

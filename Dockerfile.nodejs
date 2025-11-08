@@ -2,9 +2,14 @@ FROM node:18-alpine
 
 WORKDIR /app
 COPY nodejs/package.json .
-RUN yarn install --production
+
+RUN yarn install
+
 COPY nodejs .
+COPY nodejs/startup.sh /usr/local/bin
+
+RUN chmod +x /usr/local/bin/startup.sh
 
 EXPOSE 3000
 
-ENTRYPOINT [ "yarn", "start" ]
+ENTRYPOINT [ "startup.sh" ]

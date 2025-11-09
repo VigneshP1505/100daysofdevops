@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  service_name:
+    image:
+    command:
+    environment:
+      - 
+    volumes:
+    depends_on:
+  service_name:
+
+volumes: #same as docker volume create
+networks: #same as docker network create

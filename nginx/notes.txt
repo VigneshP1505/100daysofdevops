@@ -1,0 +1,6 @@
+brew install nginx
+
+brew services start nginx
+brew services stop nginx
+
+nginx will be installed at /opt/homebrew/etc/nginx/nginx.conf

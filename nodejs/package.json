@@ -4,15 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "bullmq": "^5.63.1",
     "express": "^5.1.0",
+    "ioredis": "^5.8.2",
     "pm2": "6.0.13"
   },
   "devDependencies": {
     "nodemon": "3.1.10"
   },
   "scripts": {
-    "start" : "node app.js",
+    "start": "node app.js",
     "dev": "nodemon app.js",
-    "start:prod": "pm2-runtime app.js -i max"
+    "start:prod": "pm2 start worker.js -i max && pm2-runtime app.js -i max"
   }
 }

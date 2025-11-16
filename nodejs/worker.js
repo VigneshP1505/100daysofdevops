@@ -8,11 +8,13 @@ new Worker(
     console.log(`Processing email ${job.data.id}`);
     await fakeSend(job.data);
   },
-  { connection }
+  { connection, concurrency: 20, lockDuration: 180000, removeOnComplete:{count:100}, removeOnFail:{count:100} }
 );
 
 async function fakeSend(data) {
   return new Promise((resolve) => {
-    setTimeout(resolve, 1000);
+    setTimeout(resolve, 3000);
+  }).then(()=>{
+    console.log("done:",data.id)
   });
 }
